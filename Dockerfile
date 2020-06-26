@@ -51,10 +51,12 @@ RUN groupadd -r chrome && useradd -r -g chrome -G audio,video chrome \
     && mkdir -p /home/chrome/Downloads && chown -R chrome:chrome /home/chrome
 
 COPY local.conf /etc/fonts/local.conf
+COPY SwitchyOmega_Chromium /SwitchyOmega_Chromium
+RUN chown -R chrome /SwitchyOmega_Chromium && chgrp -R chrome /SwitchyOmega_Chromium 
 
 # Run Chrome as non privileged user
 USER chrome
+RUN mkdir /home/chrome/.config/
 
 # Autorun chrome
 ENTRYPOINT [ "google-chrome" ]
-CMD [ "--user-data-dir=/data" ]
